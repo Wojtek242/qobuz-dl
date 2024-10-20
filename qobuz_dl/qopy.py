@@ -123,13 +123,14 @@ class Client:
         return r.json()
 
     def auth(self, email, pwd):
+        # https://github.com/vitiko98/qobuz-dl/issues/261
         usr_info = self.api_call("user/login", email=email, pwd=pwd)
-        if not usr_info["user"]["credential"]["parameters"]:
-            raise IneligibleError("Free accounts are not eligible to download tracks.")
+        # if not usr_info["user"]["credential"]["parameters"]:
+        #     raise IneligibleError("Free accounts are not eligible to download tracks.")
         self.uat = usr_info["user_auth_token"]
         self.session.headers.update({"X-User-Auth-Token": self.uat})
-        self.label = usr_info["user"]["credential"]["parameters"]["short_label"]
-        logger.info(f"{GREEN}Membership: {self.label}")
+        # self.label = usr_info["user"]["credential"]["parameters"]["short_label"]
+        # logger.info(f"{GREEN}Membership: {self.label}")
 
     def multi_meta(self, epoint, key, id, type):
         total = 1
